@@ -19,16 +19,23 @@ export default function Playvideo({videoId}) {
         const fetchingdata =useCallback(
                 async ()=>{
                         const videodetails = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${Api_key}`;
-                        await fetch(videodetails).then(res => res.json()).then(data=>{
-                                setApidata(data.items[0])
+                        try{
+                                await fetch(videodetails).then(res => res.json()).then(data=>{
+                                        setApidata(data.items[0])
                            
+                                        }
+                                        
+                                        )
+
                         }
-                          
-                        );
+                        catch(error){
+                                alert(error.message)
+                        }
+                       ;
                 }
                 ,[videoId]) 
       
-                // UC_x5XG1OV2P6uZZ5FSM9Ttw
+     
       
         const fetchchannel =useCallback(async ()=>{
                 const channeldata =`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=UC_x5XG1OV2P6uZZ5FSM9Ttw&key=${Api_key}`;
@@ -39,7 +46,13 @@ export default function Playvideo({videoId}) {
         const fetchcomment =useCallback(
                 async ()=>{
                         const commentlist = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet%2Creplies&maxResults=40&videoId=${videoId}&key=${Api_key}`;
-                        await fetch(commentlist).then(res=> res.json()).then(data => setCommentlist(data.items) )
+                        try{
+                                await fetch(commentlist).then(res=> res.json()).then(data => setCommentlist(data.items) )
+
+                        }catch(error){
+                                alert(error.message)
+                        }
+                        
         
                 },[videoId])
 
@@ -91,6 +104,7 @@ export default function Playvideo({videoId}) {
                 <hr></hr>
                 <h2>{apidata ? convert_value(apidata.statistics.commentCount ): 200} comments</h2>
                 {
+                        commentlist ? 
                         commentlist.map((item,index)=>{
                         return(
                                 <div key={index} className='user-comment'>
@@ -108,7 +122,7 @@ export default function Playvideo({videoId}) {
                                 </div>
                         )
 
-                })
+                }): alert('You might have no comments on this page')
         }
              
      

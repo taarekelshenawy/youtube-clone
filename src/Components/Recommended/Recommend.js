@@ -21,9 +21,11 @@ export default function Recommend({videicategory}) {
   return (
     <div className='recommend'>
         {
+            apikey ? 
             apikey.map((item,index)=>{
                 return(
-                    <Link to={`/video/${item.snippet.categoryId}/${item.id}/`}  className='suggested'>
+                    <div key={index}>
+                          <Link to={`/video/${item.snippet.categoryId}/${item.id}/`}  className='suggested'>
                         <img src={item.snippet.thumbnails.default.url} alt='video-img'></img>
                         <div className='suggested-info'>
                             <h3>{item.snippet.title}</h3>
@@ -32,8 +34,11 @@ export default function Recommend({videicategory}) {
                         </div>
                     </Link>
 
+                    </div>
+                  
+
                 )
-            })
+            }):alert("your category not found")
         }
        
        

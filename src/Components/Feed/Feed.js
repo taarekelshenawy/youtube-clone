@@ -24,12 +24,15 @@ export default function Feed({isSidebaropen,category}) {
         {
             data.map((item,index)=>{
                 return(
-               <Link to={`/video/${item.snippet.categoryId}/${item.id}`} className='card'>
-                    <img src={item.snippet.thumbnails.medium.url} alt='video-img'></img>
-                    <h3>{item.snippet.title}</h3>
-                    <h4>{item.snippet.channelTitle}</h4>
-                    <p>{convert_value(item.statistics.viewCount)} views &bull; {moment(item.snippet.publishedAt).fromNow() }</p>
-                </Link>
+                    <div key={index}>
+
+                            <Link to={`/video/${item.snippet.categoryId}/${item.id}`} className='card' >
+                                <img src={item.snippet.thumbnails.medium.url} alt='video-img'></img>
+                                <h3>{item.snippet.title}</h3>
+                                <h4>{item.snippet.channelTitle}</h4>
+                                <p>{convert_value(item.statistics.viewCount)} views &bull; {moment(item.snippet.publishedAt).fromNow() }</p>
+                            </Link>
+                  </div>
 
                 )
             })
